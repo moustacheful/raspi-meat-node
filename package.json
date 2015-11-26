@@ -1,0 +1,33 @@
+{
+  "name": "node-coffee",
+  "version": "0.0.1",
+  "description": "Node coffee structure",
+  "main": "gulpfile.js",
+  "contributors": [
+    {
+      "name": "Daniel Acuña"
+    }
+  ],
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "4.2."
+  },
+  "devDependencies": {
+    "bower": "^1.5.2",
+    "gulp": "^3.8.7",
+    "gulp-coffee": "^2.1.2",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-notify": "^1.5.0",
+    "gulp-plumber": "^0.6.5",
+    "gulp-watch": "^0.7.0"
+  },
+  "dependencies": {
+    "coffee-script": "^1.9.3",
+    "dotenv": "^1.2.0",
+    "firebase": "^2.3.2",
+    "lodash": "^3.10.1",
+    "onoff": "^1.0.3"
+  }
+}
