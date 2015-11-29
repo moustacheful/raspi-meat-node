@@ -1,14 +1,30 @@
 Session = require('./session')
+firebase = require('./firebase')
 
 module.exports = class Tracker
 	active: false
 	session: false
-	constructor: (@data)-> return
+	value: false
+	input: 0
+	constructor: (data)-> 
+		@threshold = data.threshold
+		@input = data.input
+		@data = 
+			label: data.label
+			id: data.id
+
+		return
 	setState: (isActive)->
+		if @active != isActive
+			# Update only on change
+			firebase.child(@data.id).set(isActive)
+
+		# if was not active and is now
 		if isActive && !@active
 			@active = true
 			@session = new Session(@data)
 
+		# if was active and is not now
 		if @active && !isActive
 			@active = false
 			@session.end()
