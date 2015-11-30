@@ -29,6 +29,7 @@ main = ->
 
 		currentValue = true
 		if currentInput < tracker.threshold
+		#if Math.random()*1000 < tracker.threshold
 			currentValue = false
 
 		tracker.setState(currentValue)
