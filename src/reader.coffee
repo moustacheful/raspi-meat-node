@@ -1,23 +1,11 @@
 GPIO = require('onoff').Gpio
 
-process.on 'SIGINT', ->
-	setTimeout ->
-		process.exit()
-	, 1000
-
 module.exports = class AnalogReader	
 	constructor: (clockpin,mosipin,misopin,cspin)->
 		@mosipin = new GPIO(mosipin,'out')
 		@misopin = new GPIO(misopin,'in')
 		@clockpin = new GPIO(clockpin,'out')
 		@cspin = new GPIO(cspin,'out')
-
-		process.on 'SIGINT', =>
-			@mosipin.unexport()
-			@misopin.unexport()
-			@clockpin.unexport()
-			@cspin.unexport()
-			console.log 'Destroying reader'
 		return
 
 	read: (adcnum)->
@@ -56,3 +44,10 @@ module.exports = class AnalogReader
 		@cspin.writeSync(1)
 		adcout >>= 1
 		return adcout
+
+	close: ->
+		@mosipin.unexport()
+		@misopin.unexport()
+		@clockpin.unexport()
+		@cspin.unexport()
+		console.log 'Destroying reader\r\n'
