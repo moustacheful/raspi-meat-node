@@ -25,28 +25,24 @@ trackers = [
 			threshold: 150
 ]
 
-main = ->
-	#_.times process.stdout.getWindowSize()[1], -> console.log('\r\n')
-	for tracker in trackers
-		currentInput = reader.read(tracker.input)
-		currentValue = true
-		#console.log currentInput, tracker.data.label
-		if currentInput < tracker.threshold
-		#if Math.random()*1000 < tracker.threshold
-			currentValue = false
+for tracker in trackers
+	reader.watch(tracker.input)
 
-		tracker.setState(currentValue)
+reader.on 'value', (input)->
+	tracker = _.find(trackers,{input:input.num})
+	currentState = true
+	if input.value < tracker.threshold
+		currentState = false
 
-mainLoop = setInterval main, 300
+	tracker.setState(currentState)
 
 heartbeat = setInterval ->
 	firebase.child('status').update
 		heartbeat: Date.now()
-,10000
+,5000
 
 
 process.on 'SIGINT', ->
-	clearInterval(mainLoop)
 	clearInterval(heartbeat)
 	reader.close()
 	process.exit()
