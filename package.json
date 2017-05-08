@@ -9,13 +9,12 @@
     }
   ],
   "scripts": {
-    "start": "node server.js"
+    "start": "gulp serve"
   },
   "engines": {
-    "node": "4.2."
+    "node": "7"
   },
   "devDependencies": {
-    "bower": "^1.5.2",
     "gulp": "^3.8.7",
     "gulp-coffee": "^2.1.2",
     "gulp-nodemon": "^2.0.4",
@@ -24,11 +23,11 @@
     "gulp-watch": "^0.7.0"
   },
   "dependencies": {
+    "analog-reader": "^1.0.2",
     "coffee-script": "^1.9.3",
     "dotenv": "^1.2.0",
-    "firebase": "^2.3.2",
-    "lodash": "^3.10.1",
-    "moment": "^2.10.6",
-    "onoff": "^1.0.3"
+    "firebase": "^3.9.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1"
   }
 }

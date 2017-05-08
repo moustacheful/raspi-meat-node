@@ -1,7 +1,7 @@
 Session = require('./session')
 firebase = require('./firebase')
 
-statusRef = firebase.child('status')
+statusRef = firebase.ref('status')
 
 module.exports = class Tracker
 	active: false

@@ -1,11 +1,11 @@
 moment = require('moment')
 _ = require('lodash')
 firebase = require('./firebase')
-sessionRef = firebase.child('session')
+sessionRef = firebase.ref('session')
 
 timestampFormat = 'YYYY-MM-D HH:mm:ss'
 
-debug = false
+debug = if process.env.DEBUG then true else false
 
 module.exports = class Session
 	isActive: true
