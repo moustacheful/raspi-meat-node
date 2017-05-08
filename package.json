@@ -23,7 +23,7 @@
     "gulp-watch": "^0.7.0"
   },
   "dependencies": {
-    "analog-reader": "^1.0.2",
+    "analog-reader": "^1.0.3",
     "coffee-script": "^1.9.3",
     "dotenv": "^1.2.0",
     "firebase": "^3.9.0",
