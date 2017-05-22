@@ -1,8 +1,6 @@
 Session = require('./session')
 firebase = require('./firebase')
 
-statusRef = firebase.ref('status')
-
 module.exports = class Tracker
 	active: false
 	session: false
@@ -13,20 +11,35 @@ module.exports = class Tracker
 		@input = data.input
 		@data = 
 			label: data.label
-			id: data.id
+			index: data.index
+			lastSince: Date.now()
+
+		@ref = firebase.ref('status').push()
+		@ref.set
+			label: data.label
+			index: data.index
+			active: false
+			since: Date.now()
+			lastDuration: 0
 
 		return
+
 	setState: (isActive)->
 		if @active != isActive
 			# Update only on change
-			statusRef.child(@data.id).set(isActive)
-
+			@ref.update
+				active: isActive
+				since: Date.now()
+				lastDuration: (Date.now() - @data.lastSince) / 10
+			
 		# if was not active and is now
 		if isActive && !@active
 			@active = true
-			@session = new Session(@data)
+			#@session = new Session(@data)
 
 		# if was active and is not now
 		if @active && !isActive
 			@active = false
-			@session.end()
+			#@session.end()
+
+		@data.lastSince = Date.now() 

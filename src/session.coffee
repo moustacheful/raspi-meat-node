@@ -14,7 +14,7 @@ module.exports = class Session
 		@startTime = Date.now()
 		@firebaseRef = sessionRef.push
 			startTime: @startTime
-			id: @meta.id
+			index: @meta.index
 			label: @meta.label
 
 		if debug

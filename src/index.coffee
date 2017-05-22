@@ -1,4 +1,5 @@
 require('dotenv').load({silent:true})
+
 _ = require('lodash')
 AnalogReader = require('analog-reader')
 Tracker = require('./tracker')
@@ -16,29 +17,28 @@ mockFn = unless process.env.USE_MOCK then undefined else (input)->
 	return (((Math.round(mockCounters[input]/5000) + input) % 2) * 170 ) + noise
 
 reader = new AnalogReader(SPICLK, SPIMOSI, SPIMISO, SPICS, mockFn)
-
 trackers = [
 		new Tracker
 			input: 0
-			id: 'b_0'
+			index: 0
 			label: 'Baño 1'
 			threshold: 150
 	,
 		new Tracker
 			input: 1
-			id: 'b_1'
+			index: 1
 			label: 'Baño 2'
 			threshold: 150
 	,
 		new Tracker
 			input: 2
-			id: 'b_2'
+			index: 2
 			label: 'Baño 3'
 			threshold: 150
 	,
 		new Tracker
 			input: 3
-			id: 'b_3'
+			index: 3
 			label: 'Baño 4'
 			threshold: 150
 ]
@@ -58,12 +58,13 @@ reader.on 'value', (input)->
 	tracker.setState(currentState)
 
 heartbeat = setInterval ->
-	firebase.ref('status').update
+	firebase.ref('health').update
 		heartbeat: Date.now()
 , 5000
 
 
 process.on 'SIGINT', ->
+	firebase.ref('status').remove()
 	clearInterval(heartbeat)
 	reader.close()
 	process.exit()
