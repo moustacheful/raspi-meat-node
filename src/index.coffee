@@ -63,8 +63,12 @@ heartbeat = setInterval ->
 , 5000
 
 
-process.on 'SIGINT', ->
+onExit = ->
 	firebase.ref('status').remove()
 	clearInterval(heartbeat)
 	reader.close()
 	process.exit()
+
+process.once 'SIGINT', onExit
+process.once 'SIGTERM', onExit
+process.once 'SIGUSR2', onExit
